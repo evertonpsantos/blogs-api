@@ -14,7 +14,15 @@ const findUserById = async (userId) => {
   return { type: '', message: foundUser };
 };
 
+const getAllUsers = async () => {
+  const userList = await User.findAll();
+  const mappedUserList = userList
+    .map(({ id, displayName, email, image }) => ({ id, displayName, email, image }));
+  return { type: '', message: mappedUserList };
+};
+
 module.exports = {
   createNewUser,
   findUserById,
+  getAllUsers,
 };
