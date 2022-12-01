@@ -15,7 +15,15 @@ const getAllUsers = async (_req, res) => {
   return res.status(200).json(message);
 };
 
+const findUserById = async (req, res) => {
+  const userId = req.params.id;
+  const foundUser = await userService.findUserById(userId);
+  if (foundUser.type) return res.status(404).json({ message: foundUser.message });
+  return res.status(200).json(foundUser.message);
+};
+
 module.exports = {
   createNewUser,
   getAllUsers,
+  findUserById,
 };

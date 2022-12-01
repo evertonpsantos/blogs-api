@@ -11,6 +11,8 @@ const createNewUser = async (newUser) => {
 
 const findUserById = async (userId) => {
   const foundUser = await User.findByPk(userId);
+  if (!foundUser) return { type: 'USER_NOT_FOUND', message: 'User does not exist' };
+  foundUser.password = undefined;
   return { type: '', message: foundUser };
 };
 
