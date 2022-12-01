@@ -20,7 +20,15 @@ const newUserRequestSchema = Joi.object({
   'string.email': '{#label} must be a valid email',
 });
 
+const newCategorySchema = Joi.object({
+  name: Joi.string().required().messages({
+    'string.empty': '{#label} is required',
+    'any.required': '{#label} is required',
+  }),
+});
+
 module.exports = {
   loginRequestSchema,
   newUserRequestSchema,
+  newCategorySchema,
 };
