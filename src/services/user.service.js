@@ -9,6 +9,12 @@ const createNewUser = async (newUser) => {
   return { type: '', message: registeredUser };
 };
 
+const findUserById = async (userId) => {
+  const foundUser = await User.findByPk(userId);
+  return { type: '', message: foundUser };
+};
+
 module.exports = {
   createNewUser,
+  findUserById,
 };
