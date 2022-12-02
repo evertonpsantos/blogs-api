@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     }, 
     userId: {
       type: DataTypes.INTEGER,
+      field: 'user_id',
       foreignKey: true,
     }}, {
       timestamps: false,
@@ -30,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     blogPost.associate = (models) => {
       blogPost.belongsTo(models.User, {
         foreignKeys: 'userId',
-        as: 'users'
+        as: 'user'
       })
     };
 
