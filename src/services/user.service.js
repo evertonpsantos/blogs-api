@@ -23,8 +23,13 @@ const getAllUsers = async () => {
   return { type: '', message: mappedUserList };
 };
 
+const deleteUser = async (userId) => {
+  await User.destroy({ where: { id: userId } });
+};
+
 module.exports = {
   createNewUser,
   findUserById,
   getAllUsers,
+  deleteUser,
 };
