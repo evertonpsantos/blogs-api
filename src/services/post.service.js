@@ -67,10 +67,32 @@ const getByText = async (text) => {
   return foundList;
 };
 
+const updatePost = async ({ title, content }, userId, postId) => {
+  const foundPost = await BlogPost.findByPk(postId);
+  if (!foundPost) return { type: 'POST_NOT_FOUND', message: 'Post does not exist' };
+
+  if (foundPost.userId !== userId) {
+    return { type: 'UNAUTHORIZED_USER', message: 'Unauthorized user' };
+  }
+
+  await BlogPost.update({ title, content }, {
+    where: { id: postId },
+  });
+
+  const updatedPost = await BlogPost.findByPk(postId, {
+    include: 
+    [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, 
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+  
+  return { type: '', message: updatedPost };
+};
+
 module.exports = {
   createNewBlogPost,
   getAllPosts,
   getPostById,
   deletePost,
   getByText,
+  updatePost,
 };

@@ -39,9 +39,18 @@ const newPostSchema = Joi.object({
   'array.min': requiredError,
 });
 
+const newPostInfoSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+}).messages({
+  'string.empty': requiredError,
+  'any.required': requiredError,
+});
+
 module.exports = {
   loginRequestSchema,
   newUserRequestSchema,
   newCategorySchema,
   newPostSchema,
+  newPostInfoSchema,
 };

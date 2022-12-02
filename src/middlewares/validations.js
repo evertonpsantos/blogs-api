@@ -1,5 +1,6 @@
 const { loginRequestSchema, newUserRequestSchema, newCategorySchema, 
-  newPostSchema } = require('./schemas');
+  newPostSchema, 
+  newPostInfoSchema } = require('./schemas');
 
 const validateLoginRequest = (req, res, next) => {
   const loginRequest = req.body;
@@ -40,9 +41,18 @@ const validateNewPost = (req, res, next) => {
   next();
 };
 
+const validateNewPostInfo = (req, res, next) => {
+  const newInfo = req.body;
+
+  const { error } = newPostInfoSchema.validate(newInfo);
+  if (error) return res.status(400).json({ message: error.details[0].message });
+  next();
+};
+
 module.exports = {
   validateLoginRequest,
   validateNewUserRequest,
   validateNewCategory,
   validateNewPost,
+  validateNewPostInfo,
 };

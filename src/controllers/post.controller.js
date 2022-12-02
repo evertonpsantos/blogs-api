@@ -43,10 +43,23 @@ const getByText = async (req, res) => {
   return res.status(200).json(foundPosts);
 };
 
+const updatePost = async (req, res) => {
+  const userId = req.user.message.id;
+  const postId = req.params.id;
+  const infoToChange = req.body;
+
+  const { type, message } = await postsService.updatePost(infoToChange, userId, postId);
+  if (type === 'POST_NOT_FOUND') return res.status(404).json({ message });
+  if (type === 'UNAUTHORIZED_USER') return res.status(401).json({ message });
+  
+  return res.status(200).json(message);
+};
+
 module.exports = {
   createNewBlogPost,
   getAllPosts,
   getPostById,
   deletePost,
   getByText,
+  updatePost,
 };
