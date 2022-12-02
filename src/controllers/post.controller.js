@@ -15,8 +15,9 @@ const getAllPosts = async (_req, res) => {
 
 const getPostById = async (req, res) => {
   const postId = req.params.id;
-  const result = await postsService.getPostById(postId);
-  return res.status(200).json(result);
+  const { type, message } = await postsService.getPostById(postId);
+  if (type) return res.status(404).json(message);
+  return res.status(200).json(message);
 };
 
 module.exports = {

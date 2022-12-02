@@ -35,7 +35,9 @@ const getPostById = async (postId) => {
     { model: Category, as: 'categories', through: { attributes: [] } }],
   });
 
-  return result;
+  if (!result) return { type: 'POST_NOT_FOUND', message: 'Post does not exist' };
+
+  return { type: '', message: result };
 };
 
 module.exports = {
