@@ -31,9 +31,22 @@ const deletePost = async (req, res) => {
   return res.status(204).json();
 };
 
+const getByText = async (req, res) => {
+  const { q } = req.query;
+
+  if (!q) {
+    const postsList = await postsService.getAllPosts();
+    return res.status(200).json(postsList); 
+  }
+
+  const foundPosts = await postsService.getByText(q);
+  return res.status(200).json(foundPosts);
+};
+
 module.exports = {
   createNewBlogPost,
   getAllPosts,
   getPostById,
   deletePost,
+  getByText,
 };
