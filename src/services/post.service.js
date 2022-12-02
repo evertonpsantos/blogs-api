@@ -40,8 +40,21 @@ const getPostById = async (postId) => {
   return { type: '', message: result };
 };
 
+const deletePost = async (postId, userId) => {
+  const foundPost = await BlogPost.findByPk(postId);
+  if (!foundPost) return { type: 'POST_NOT_FOUND', message: 'Post does not exist' };
+
+  if (foundPost.userId !== userId) {
+    return { type: 'UNAUTHORIZED_USER', message: 'Unauthorized user' };
+  }
+  
+  await BlogPost.destroy({ where: { id: postId } });
+  return { type: '', message: 'Post deleted successfully' };
+};
+
 module.exports = {
   createNewBlogPost,
   getAllPosts,
   getPostById,
+  deletePost,
 };
