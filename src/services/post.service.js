@@ -22,13 +22,24 @@ const getAllPosts = async () => {
   const postsList = BlogPost.findAll({
     include: 
     [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, 
-    { model: Category, as: 'categories' }],
+    { model: Category, as: 'categories', through: { attributes: [] } }],
   });
   
   return postsList;
 };
 
+const getPostById = async (postId) => {
+  const result = await BlogPost.findByPk(postId, {
+    include: 
+    [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, 
+    { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+
+  return result;
+};
+
 module.exports = {
   createNewBlogPost,
   getAllPosts,
+  getPostById,
 };
