@@ -16,7 +16,7 @@ const getAllPosts = async (_req, res) => {
 const getPostById = async (req, res) => {
   const postId = req.params.id;
   const { type, message } = await postsService.getPostById(postId);
-  if (type) return res.status(404).json(message);
+  if (type) return res.status(404).json({ message: 'Post does not exist' });
   return res.status(200).json(message);
 };
 
